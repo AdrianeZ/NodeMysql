@@ -2,17 +2,20 @@ const mysql = require("mysql2/promise");
 
 async function createQuery()
 {
-  const connection = await mysql.createConnection(
+  const connection = await mysql.createPool(
       {
         host: "localhost",
-        user: "root",
-        password: "",
-        database: "book_shop"
+        user: "phpmyadmin",
+        password: "brutusex12",
+        database: "megak_courses"
       }
   )
+    //Zad1. Pobieranie wszystkich kursow
+  // const [results] = await connection.execute("SELECT * FROM `courses`");
+  // console.log(results);
 
-  const [{affectedRows}] = await connection.execute("DELETE FROM `books` WHERE `book_id` = 200");
-  console.log(affectedRows);
+   const [results] = await connection.execute("SELECT `students.id`, `name`, `surname` FROM `students` LEFT JOIN `courses` ON");
+    console.log(results);
 
   await connection.end();
 
