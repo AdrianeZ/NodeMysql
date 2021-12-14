@@ -1,10 +1,21 @@
-const pool = require("./utils/db");
-const TodoRecord = require("./records/todo.record");
+const express = require("express");
+const {engine} = require("express-handlebars");
 
-(async () => {
-    const c = await TodoRecord.find("ec06188d-8d8f-410e-b5da-def6e4a35d44");
-    await c?.update("sfdsfasfafasf");
-    await c?.insert();
-    await pool.end();
-})();
+const app = express();
 
+
+
+app.engine('.hbs', engine({extname: '.hbs'}));
+app.set('view engine', '.hbs');
+app.set('views', "./views");
+
+app.use(express.urlencoded({
+  extended: true
+}));
+app.use(express.static("public"));
+
+app.get('/', (req, res) => {
+  res.render('home');
+});
+
+app.listen(3000,"localhost");
