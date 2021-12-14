@@ -1,1 +1,18 @@
-<h1>It works</h1>
+<ul class="todo-list">
+    {{#each todos}}
+        <li class="todo-list__item">{{this.title}}
+            <form action="/todos/{{this.id}}?_method=DELETE" method="POST">
+                <button>Delete</button>
+            </form>
+        </li>
+    {{/each}}
+
+</ul>
+
+<div class="todo__form">
+    <form action="/todos" method="POST">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title">
+        <input type="submit" value="Wyślij">
+    </form>
+</div>

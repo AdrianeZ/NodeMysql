@@ -20,6 +20,12 @@ class TodoRecord
         return new TodoRecord(results.title, results.id);
     }
 
+    static async getAll()
+    {
+        const [results] = await pool.execute("SELECT `title`, `id` FROM `todos` ORDER BY `created_at`");
+        return results;
+    }
+
     validate(title)
     {
         if (title.trim().length < 5) throw new Error("Title should have at lease five characters");
@@ -33,7 +39,7 @@ class TodoRecord
         //walidacja czy todos istnieje
         if (results) throw new Error("Todos with this id already exists");
 
-        await pool.execute("INSERT INTO `todos` VALUES(:id,:title)", {
+        await pool.execute("INSERT INTO `todos` (`id`, `title`) VALUES(:id,:title)", {
             id: this.id,
             title: this.title
         });
